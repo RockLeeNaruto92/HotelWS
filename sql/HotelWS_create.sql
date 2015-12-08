@@ -1,70 +1,75 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2015-12-01 16:40:25.266
 
-DROP hotel_ws IF EXISTS;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+DROP DATABASE IF EXISTS hotel_ws;
 CREATE DATABASE hotel_ws;
 USE hotel_ws;
 
+-- tables
+-- Table airlines
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 
 -- tables
--- Table contract_hotel
-CREATE TABLE contract_hotel (
-    contract_id int  NOT NULL,
+-- Table contracts
+CREATE TABLE contracts (
+    id int  NOT NULL,
     hotel_id varchar(20)  NOT NULL,
+    customer_id_number varchar(45)  NOT NULL,
     company_name varchar(45)  NOT NULL,
-    customer_cmt varchar(45)  NOT NULL,
     company_address varchar(45)  NOT NULL,
     company_phone varchar(45)  NOT NULL,
-    number_single_room int  NOT NULL,
-    number_double_room int  NOT NULL,
-    number_four_people_room int  NOT NULL,
+    booking_rooms int NOT NULL,
     check_in_date date  NOT NULL,
     check_out_date date  NOT NULL,
     status int  NOT NULL,
-    payments_method varchar(45)  NOT NULL,
-    contract_create_date date  NOT NULL,
-    single_cost int  NOT NULL,
-    double_cost int  NOT NULL,
-    four_people_cost int  NOT NULL,
-    constract_changeable_day date  NOT NULL,
-    changed_count int  NOT NULL,
+    payment_method varchar(45)  NOT NULL,
+    created_time datetime,
     total_money int  NOT NULL,
-    hotel_info_hotel_id int  NOT NULL,
-    CONSTRAINT contract_hotel_pk PRIMARY KEY (contract_id)
-);
+    CONSTRAINT contracts_pk PRIMARY KEY (id)
+)ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Table hotel_info
-CREATE TABLE hotel_info (
-    hotel_id int  NOT NULL,
-    hotel_name varchar(45)  NOT NULL,
-    hotel_star int  NOT NULL,
-    hotel_ward varchar(45)  NOT NULL,
-    hotel_country varchar(45)  NOT NULL,
-    hotel_city varchar(45)  NOT NULL,
-    hotel_full_address varchar(90)  NOT NULL,
-    hotel_website varchar(45)  NOT NULL,
-    hotel_email varchar(45)  NOT NULL,
-    hotel_phone varchar(45)  NOT NULL,
-    total_room int  NOT NULL,
-    single_room_avaiable int  NOT NULL,
-    double_room_available int  NOT NULL,
-    four_people_room_available int  NOT NULL,
-    single_room_cost int  NOT NULL,
-    double_room_cost int  NOT NULL,
-    four_people_room_cost int  NOT NULL,
-    CONSTRAINT hotel_info_pk PRIMARY KEY (hotel_id)
-);
+-- Table hotels
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE hotels (
+    id varchar(20)  NOT NULL,
+    name varchar(45)  NOT NULL,
+    star int  NOT NULL,
+    province varchar(45)  NOT NULL,
+    country varchar(45)  NOT NULL,
+    address varchar(45)  NOT NULL,
+    website varchar(45)  NOT NULL,
+    phone varchar(45)  NOT NULL,
+    total_rooms int  NOT NULL,
+    available_rooms int NOT NULL,
+    cost int  NOT NULL,
+    CONSTRAINT hotels_pk PRIMARY KEY (id)
+)ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 
 
 
 
 -- foreign keys
--- Reference:  contract_hotel_hotel_info (table: contract_hotel)
+-- Reference:  contracts_hotels (table: contracts)
 
 
-ALTER TABLE contract_hotel ADD CONSTRAINT contract_hotel_hotel_info FOREIGN KEY contract_hotel_hotel_info (hotel_info_hotel_id)
-    REFERENCES hotel_info (hotel_id);
+ALTER TABLE contracts ADD CONSTRAINT contract_hotel_fk FOREIGN KEY contracts (hotel_id)
+    REFERENCES hotels (id);
 
 
 
