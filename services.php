@@ -22,6 +22,17 @@ $server->register("addNewHotel",
   "Add new hotel"
   );
 
+// isExistedHotel
+$server->register("isExistedHotel",
+  array("id" => "xsd:string"), // input params
+  array("return" => "xsd:integer"), // output
+  "urn:hotels", // namespace
+  "urn:hotels#isExistedHotel",
+  "rpc",
+  "encoded",
+  "Check hotel is existed or not"
+  );
+
 // deploy services
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : "";
 $server->service($HTTP_RAW_POST_DATA);

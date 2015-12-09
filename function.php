@@ -9,7 +9,7 @@ function isValidTimeFormat($time){
   return strtotime($time) != NULL;
 }
 
-// checking
+// ok
 function addNewHotel($id = NULL, $name = NULL, $star = 0, $province = NULL,
   $country = NULL, $address = NULL, $website = NULL, $phone = NULL,
   $total_rooms = 0, $cost = 0){
@@ -48,5 +48,17 @@ function addNewHotel($id = NULL, $name = NULL, $star = 0, $province = NULL,
 
   if ($result) return -1; // OK
   else return 10; // "error_message" => "Error on execution query"
+}
+
+// checking
+function isExistedHotel($id = NULL){
+  if (isEmpty($id)) return 0; // "error_message" => "Id is not present"
+
+  $db = new DatabaseConfig;
+  $result = $db->existed("hotels", "id", $id);
+  unset($db);
+
+  if ($result) return -1; // OK
+  else return 1; // "error_message" => "Id is not exist in database"
 }
 ?>
