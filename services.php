@@ -33,6 +33,17 @@ $server->register("isExistedHotel",
   "Check hotel is existed or not"
   );
 
+// findByProvince
+$server->register("findByProvince",
+  array("province" => "xsd:string"), // input params
+  array("return" => "xsd:string"), // output
+  "urn:hotels", // namespace
+  "urn:hotels#findByProvince",
+  "rpc",
+  "encoded",
+  "Find all hotels in province"
+  );
+
 // deploy services
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : "";
 $server->service($HTTP_RAW_POST_DATA);

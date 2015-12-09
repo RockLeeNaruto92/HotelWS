@@ -50,7 +50,7 @@ function addNewHotel($id = NULL, $name = NULL, $star = 0, $province = NULL,
   else return 10; // "error_message" => "Error on execution query"
 }
 
-// checking
+// ok
 function isExistedHotel($id = NULL){
   if (isEmpty($id)) return 0; // "error_message" => "Id is not present"
 
@@ -60,5 +60,27 @@ function isExistedHotel($id = NULL){
 
   if ($result) return -1; // OK
   else return 1; // "error_message" => "Id is not exist in database"
+}
+
+// ok
+function findByProvince($province = NULL){
+  if (isEmpty($province)) return "Province is not present"; // "error_message" => "Province is not present"
+
+  $db = new DatabaseConfig;
+  $query = "SELECT * FROM hotels WHERE province = '$province'";
+  $result = $db->query($query);
+  unset($db);
+
+  if (mysql_num_rows($result) == 0) return "Not exist any hotels";
+  else {
+    $data = array();
+    while ($row = mysql_fetch_array($result)){
+      $rowData = array();
+      foreach (DatabaseConfig::$HOTELS as $value)
+        $rowData[$value] = $row[$value];
+      $data[] = $rowData;
+    }
+    return json_encode($data);
+  }
 }
 ?>
