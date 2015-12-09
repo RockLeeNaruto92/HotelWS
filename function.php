@@ -83,4 +83,63 @@ function findByProvince($province = NULL){
     return json_encode($data);
   }
 }
+
+// checking
+function addNewContract($hotel_id = NULL, $customer_id_number = NULL, $company_name = NULL,
+  $company_address = NULL, $company_phone = NULL, $booking_rooms = 0, $check_in_date = NULL, $check_out_date = NULL,
+  $payment_method = NULL){
+  // Check $customer_id_number
+  if (isEmpty($customer_id_number)) return 0; // "error_message" => "Customer id number is not present"
+
+  // Check $company_name, $company_address, $company_phone
+  if (isEmpty($company_name)) return 1; // "error_message" => "Company name is not present"
+  if (isEmpty($company_address)) return 2; // "error_message" => "Company adress is not present"
+  if (isEmpty($company_phone)) return 3; // "error_message" => "Company phone is not present"
+
+  // check $check_in_date, $check_out_date
+  if (isEmpty($check_in_date)) return 4; // "error_message" => "Check in date is not present"
+  if (isEmpty($check_out_date)) return 5; // "error_message" => "Check out date is not present"
+  if (!isValidTimeFormat($check_in_date)) return 6; // "error_message" => "Check in date have invalid time format"
+  if (!isValidTimeFormat($check_out_date)) return 7; // "error_message" => "Check out date have invalid time format"
+
+  // Check $payment_method
+  if (isEmpty($payment_method)) return 8; // "error_message" => "Payment method is not present"
+
+  // check $booking_rooms
+  if ($booking_rooms == 0) return 9; // "error_message" => "Booking rooms number must be greater than 0"
+
+  // Check $hotel_id
+  $db = new DatabaseConfig;
+  $result = $db->existed("hotels", "id", $hotel_id);
+  if (!$result){
+    unset($db);
+    return 10; // "error_message" => "Hotel id is not existed in database"
+  }
+
+  // Check booking_room is available
+  if ($result["available_rooms"] < $booking_rooms){
+    unset($db);
+    return 11; // "error_message" => "Available room is not enough"
+  }
+
+  $available_rooms = $result["available_rooms"] - $booking_rooms;
+  $total_money = $booking_rooms * $result["cost"];
+  $status = 0;
+  $created_time = date("Y/m/d H:m", time());
+
+  $query = "INSERT INTO contracts(hotel_id, customer_id_number, company_name, company_address, company_phone, booking_rooms, check_in_date, check_out_date, status, payment_method, created_time, total_money)";
+  $query .= "VALUES ('$hotel_id', '$customer_id_number', '$company_name', '$company_address', '$company_phone', '$booking_rooms', '$check_in_date', '$check_out_date', '$status', '$payment_method', '$created_time', '$total_money')";
+
+  $result = $db->query($query);
+
+  if ($result) {
+    $query = "UPDATE hotels SET available_rooms = $available_rooms WHERE id = '$hotel_id'";
+    $db->query($query);
+    unset($db);
+    return -1; // ok
+  }
+
+  unset($db);
+  return 12; // "error_message" => "Error on execution query"
+}
 ?>

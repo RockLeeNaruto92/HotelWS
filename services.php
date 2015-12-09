@@ -44,6 +44,19 @@ $server->register("findByProvince",
   "Find all hotels in province"
   );
 
+// addNewContact
+$server->register("addNewContract",
+  array("hotel_id" => "xsd:string", "customer_id_number" => "xsd:string", "company_name" => "xsd:string",
+    "company_address" => "xsd:string", "company_phone" => "xsd:string", "bookings_rooms" => "xsd:integer",
+    "check_in_date" => "xsd:string", "check_out_date" => "xsd:string", "payment_method" => "xsd:string"), // input params
+  array("return" => "xsd:integer"), // output
+  "urn:hotels", // namespace
+  "urn:hotels#addNewContract",
+  "rpc",
+  "encoded",
+  "Add new contract"
+  );
+
 // deploy services
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : "";
 $server->service($HTTP_RAW_POST_DATA);
