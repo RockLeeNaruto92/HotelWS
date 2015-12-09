@@ -6,6 +6,8 @@ class DatabaseConfig {
   var $database;
   var $connection; // connection object
 
+  public static $HOTELS = array("id", "name", "star", "province", "country", "address", "website", "phone", "total_rooms", "available_rooms", "cost");
+
   function __construct(
     $serverName = "localhost",
     $userName = "root",
