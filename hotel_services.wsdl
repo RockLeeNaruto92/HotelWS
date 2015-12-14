@@ -1,0 +1,135 @@
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:hotels" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:hotels">
+  <types>
+    <xsd:schema targetNamespace="urn:hotels">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+    </xsd:schema>
+  </types>
+  <message name="addNewHotelRequest">
+    <part name="id" type="xsd:string"/>
+    <part name="name" type="xsd:string"/>
+    <part name="star" type="xsd:integer"/>
+    <part name="province" type="xsd:string"/>
+    <part name="country" type="xsd:string"/>
+    <part name="address" type="xsd:string"/>
+    <part name="website" type="xsd:string"/>
+    <part name="phone" type="xsd:string"/>
+    <part name="total_rooms" type="xsd:integer"/>
+    <part name="cost" type="xsd:integer"/>
+  </message>
+  <message name="addNewHotelResponse">
+    <part name="return" type="xsd:integer"/>
+  </message>
+  <message name="isExistedHotelRequest">
+    <part name="id" type="xsd:string"/>
+  </message>
+  <message name="isExistedHotelResponse">
+    <part name="return" type="xsd:integer"/>
+  </message>
+  <message name="findByProvinceRequest">
+    <part name="province" type="xsd:string"/>
+  </message>
+  <message name="findByProvinceResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
+  <message name="addNewContractRequest">
+    <part name="hotel_id" type="xsd:string"/>
+    <part name="customer_id_number" type="xsd:string"/>
+    <part name="company_name" type="xsd:string"/>
+    <part name="company_address" type="xsd:string"/>
+    <part name="company_phone" type="xsd:string"/>
+    <part name="bookings_rooms" type="xsd:integer"/>
+    <part name="check_in_date" type="xsd:string"/>
+    <part name="check_out_date" type="xsd:string"/>
+    <part name="payment_method" type="xsd:string"/>
+  </message>
+  <message name="addNewContractResponse">
+    <part name="return" type="xsd:integer"/>
+  </message>
+  <message name="checkRoomAvailableRequest">
+    <part name="hotel_id" type="xsd:string"/>
+  </message>
+  <message name="checkRoomAvailableResponse">
+    <part name="return" type="xsd:integer"/>
+  </message>
+  <portType name="hotelsPortType">
+    <operation name="addNewHotel">
+      <documentation>Add new hotel</documentation>
+      <input message="tns:addNewHotelRequest"/>
+      <output message="tns:addNewHotelResponse"/>
+    </operation>
+    <operation name="isExistedHotel">
+      <documentation>Check hotel is existed or not</documentation>
+      <input message="tns:isExistedHotelRequest"/>
+      <output message="tns:isExistedHotelResponse"/>
+    </operation>
+    <operation name="findByProvince">
+      <documentation>Find all hotels in province</documentation>
+      <input message="tns:findByProvinceRequest"/>
+      <output message="tns:findByProvinceResponse"/>
+    </operation>
+    <operation name="addNewContract">
+      <documentation>Add new contract</documentation>
+      <input message="tns:addNewContractRequest"/>
+      <output message="tns:addNewContractResponse"/>
+    </operation>
+    <operation name="checkRoomAvailable">
+      <documentation>Check room available</documentation>
+      <input message="tns:checkRoomAvailableRequest"/>
+      <output message="tns:checkRoomAvailableResponse"/>
+    </operation>
+  </portType>
+  <binding name="hotelsBinding" type="tns:hotelsPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="addNewHotel">
+      <soap:operation soapAction="urn:hotels#addNewHotel" style="rpc"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="isExistedHotel">
+      <soap:operation soapAction="urn:hotels#isExistedHotel" style="rpc"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="findByProvince">
+      <soap:operation soapAction="urn:hotels#findByProvince" style="rpc"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="addNewContract">
+      <soap:operation soapAction="urn:hotels#addNewContract" style="rpc"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="checkRoomAvailable">
+      <soap:operation soapAction="urn:hotels#checkRoomAvailable" style="rpc"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="hotels">
+    <port name="hotelsPort" binding="tns:hotelsBinding">
+      <soap:address location="http://localhost/HotelWS/services.php"/>
+    </port>
+  </service>
+</definitions>
