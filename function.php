@@ -84,7 +84,7 @@ function findByProvince($province = NULL){
   }
 }
 
-// checking
+// ok
 function addNewContract($hotel_id = NULL, $customer_id_number = NULL, $company_name = NULL,
   $company_address = NULL, $company_phone = NULL, $booking_rooms = 0, $check_in_date = NULL, $check_out_date = NULL,
   $payment_method = NULL){
@@ -141,5 +141,19 @@ function addNewContract($hotel_id = NULL, $customer_id_number = NULL, $company_n
 
   unset($db);
   return 12; // "error_message" => "Error on execution query"
+}
+
+// checking
+function checkRoomAvailable($hotel_id){
+  if (isEmpty($hotel_id)) return -1; // "error_message" => "Hotel id is not present"
+
+  $db = new DatabaseConfig;
+  $result = $db->existed("hotels", "id", $hotel_id);
+  unset($db);
+
+  if ($result)
+    if ($result["available_rooms"] > 0) return 1;
+    else return 0;
+  else return -2; // "error_message" => "Hotel id is not existed in database"
 }
 ?>

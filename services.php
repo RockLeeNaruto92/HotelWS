@@ -57,6 +57,16 @@ $server->register("addNewContract",
   "Add new contract"
   );
 
+// checkRoomAvailable
+$server->register("checkRoomAvailable",
+  array("hotel_id" => "xsd:string"), // input params
+  array("return" => "xsd:integer"), // output
+  "urn:hotels", // namespace
+  "urn:hotels#checkRoomAvailable",
+  "rpc",
+  "encoded",
+  "Check room available"
+  );
 // deploy services
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : "";
 $server->service($HTTP_RAW_POST_DATA);
