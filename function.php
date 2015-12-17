@@ -143,7 +143,7 @@ function addNewContract($hotel_id = NULL, $customer_id_number = NULL, $company_n
   return 12; // "error_message" => "Error on execution query"
 }
 
-// checking
+// ok
 function checkRoomAvailable($hotel_id){
   if (isEmpty($hotel_id)) return -1; // "error_message" => "Hotel id is not present"
 
@@ -155,5 +155,23 @@ function checkRoomAvailable($hotel_id){
     if ($result["available_rooms"] > 0) return 1;
     else return 0;
   else return -2; // "error_message" => "Hotel id is not existed in database"
+}
+
+// ok
+function getAllHotels(){
+  $db = new DatabaseConfig;
+  $query = "SELECT * FROM hotels";
+  $result = $db->query($query);
+  unset($db);
+
+  if (!$result) return "Hotel WS have 0 hotels";
+  $data = array();
+  while ($row = mysql_fetch_array($result)){
+    $rowData = array();
+    foreach (DatabaseConfig::$HOTELS as $value)
+      $rowData[$value] = $row[$value];
+    $data[] = $rowData;
+  }
+  return json_encode($data);
 }
 ?>

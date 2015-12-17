@@ -52,6 +52,10 @@
   <message name="checkRoomAvailableResponse">
     <part name="return" type="xsd:integer"/>
   </message>
+  <message name="getAllHotelsRequest"/>
+  <message name="getAllHotelsResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
   <portType name="hotelsPortType">
     <operation name="addNewHotel">
       <documentation>Add new hotel</documentation>
@@ -77,6 +81,11 @@
       <documentation>Check room available</documentation>
       <input message="tns:checkRoomAvailableRequest"/>
       <output message="tns:checkRoomAvailableResponse"/>
+    </operation>
+    <operation name="getAllHotels">
+      <documentation>Get all hotels</documentation>
+      <input message="tns:getAllHotelsRequest"/>
+      <output message="tns:getAllHotelsResponse"/>
     </operation>
   </portType>
   <binding name="hotelsBinding" type="tns:hotelsPortType">
@@ -119,6 +128,15 @@
     </operation>
     <operation name="checkRoomAvailable">
       <soap:operation soapAction="urn:hotels#checkRoomAvailable" style="rpc"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="getAllHotels">
+      <soap:operation soapAction="urn:hotels#getAllHotels" style="rpc"/>
       <input>
         <soap:body use="encoded" namespace="urn:hotels" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>

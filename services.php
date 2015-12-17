@@ -67,6 +67,17 @@ $server->register("checkRoomAvailable",
   "encoded",
   "Check room available"
   );
+
+// getAllHotels
+$server->register("getAllHotels",
+  array(), // input params
+  array("return" => "xsd:string"), // output
+  "urn:hotels", // namespace
+  "urn:hotels#getAllHotels",
+  "rpc",
+  "encoded",
+  "Get all hotels"
+  );
 // deploy services
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : "";
 $server->service($HTTP_RAW_POST_DATA);
